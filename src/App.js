@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 function App() {
   const [user, setUser] = useState(null);
   const [activeDiv, setActiveDiv] = useState(1);
+  const [expandedDiv, setExpandedDiv] = useState(null);
+  const [disableHover, setDisableHover] = useState(false);
+  let hoverTimeout;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,6 +19,19 @@ function App() {
 
     fetchData();
   }, []);
+
+  const handleMouseOver = (divIndex) => {
+    if (!disableHover) {
+      setActiveDiv(divIndex);
+      setExpandedDiv(divIndex);
+      setDisableHover(true);
+
+      // Disable handleMouseOver for 500ms
+      hoverTimeout = setTimeout(() => {
+        setDisableHover(false);
+      }, 500);
+    }
+  };
 
   return (
     <>
@@ -55,66 +72,88 @@ function App() {
                 </div>
               )}
             </div>
-            <div className="flex gap-32">
-              <div
-                className="cursor-pointer relative"
-                onMouseOver={() => setActiveDiv(1)}
-              >
-                <div
+            <div className="flex mr-8 gap-32">
+              <div className="cursor-pointer relative">
+                <motion.div
+                  className="cursor-pointer relative"
+                  onMouseOver={() => handleMouseOver(1)}
+                  animate={{
+                    width: expandedDiv === 1 ? 500 : 50,
+                    height: expandedDiv === 1 ? 500 : 50,
+                    top: expandedDiv === 1 ? -350 : 0,
+                    zIndex: expandedDiv === 1 ? -1 : 0,
+                  }}
+                  transition={{ duration: 0.5 }}
                   style={{
-                    width: 50,
-                    height: 50,
                     backgroundImage: `url(/about.svg)`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    position:'absolute'
+                    position: 'absolute',
                   }}
-                ></div>
+                ></motion.div>
               </div>
-              <div
-                className="cursor-pointer relative"
-                onMouseOver={() => setActiveDiv(2)}
-              >
-                <div
+
+              <div className="cursor-pointer relative">
+                <motion.div
+                  className="cursor-pointer relative"
+                  onMouseOver={() => handleMouseOver(2)}
+                  animate={{
+                    width: expandedDiv === 2 ? 500 : 50,
+                    height: expandedDiv === 2 ? 500 : 50,
+                    top: expandedDiv === 2 ? -350 : 0,
+                    left: expandedDiv === 2 ? -150 : 0,
+                    zIndex: expandedDiv === 2 ? -1 : 0,
+                  }}
+                  transition={{ duration: 0.5 }}
                   style={{
-                    width: 50,
-                    height: 50,
                     backgroundImage: `url(/avatar.svg)`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    position:'absolute'
+                    position: 'absolute',
                   }}
-                ></div>
+                ></motion.div>
               </div>
-              <div
-                className="cursor-pointer relative"
-                onMouseOver={() => setActiveDiv(3)}
-              >
-                <div
+
+              <div className="cursor-pointer relative">
+                <motion.div
+                  className="cursor-pointer relative"
+                  onMouseOver={() => handleMouseOver(3)}
+                  animate={{
+                    width: expandedDiv === 3 ? 500 : 50,
+                    height: expandedDiv === 3 ? 500 : 50,
+                    top: expandedDiv === 3 ? -350 : 0,
+                    left: expandedDiv === 3 ? -280 : 0,
+                    zIndex: expandedDiv === 3 ? -1 : 0,
+                  }}
+                  transition={{ duration: 0.5 }}
                   style={{
-                    width: 50,
-                    height: 50,
                     backgroundImage: `url(/gender.svg)`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    position:'absolute'
+                    position: 'absolute',
                   }}
-                ></div>
+                ></motion.div>
               </div>
-              <div
-                className="cursor-pointer relative"
-                onMouseOver={() => setActiveDiv(4)}
-              >
-                <div
+
+              <div className="cursor-pointer relative">
+                <motion.div
+                  className="cursor-pointer relative"
+                  onMouseOver={() => handleMouseOver(4)}
+                  animate={{
+                    width: expandedDiv === 4 ? 500 : 50,
+                    height: expandedDiv === 4 ? 500 : 50,
+                    top: expandedDiv === 4 ? -350 : 0,
+                    left: expandedDiv === 4 ? -450 : 0,
+                    zIndex: expandedDiv === 4 ? -1 : 0,
+                  }}
+                  transition={{ duration: 0.5 }}
                   style={{
-                    width: 50,
-                    height: 50,
                     backgroundImage: `url(/phone.svg)`,
                     backgroundPosition: 'center',
                     backgroundSize: 'cover',
-                    position:'absolute'
+                    position: 'absolute',
                   }}
-                ></div>
+                ></motion.div>
               </div>
             </div>
           </div>
